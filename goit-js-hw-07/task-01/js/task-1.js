@@ -4,14 +4,8 @@ const quantityCategories = categoriRef.children.length;
 
 console.log(`В списке ${quantityCategories} категории.`);
 
-const categoriNameRef = document.querySelectorAll(".item");
+const getCategoriName = [...categories.children]
+.map(e => `${e.children[0].textContent}: ${e.children[1].children.length}`)
+.join('\n');
 
-const itemsNameRef = document.querySelectorAll(".item ul");
-
-categoriNameRef.forEach((link) =>
-  console.log(`Категория: ${link.firstElementChild.textContent}`)
-);
-
-itemsNameRef.forEach((link) =>
-  console.log(`Количество элементов: ${link.children.length}`)
-);
+console.log(getCategoriName);
