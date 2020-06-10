@@ -1,14 +1,14 @@
 import gallery from "./gallery-items.js";
 
-const jsGalleryRef = document.querySelector(".js-gallery");
-const originalImgRef = document.querySelector(".lightbox__image");
-const openModalRef = document.querySelector(".lightbox");
-const closeModalBtnRef = document.querySelector(
-  'button[data-action="close-lightbox"]'
-);
+const refs = {
+  jsGallery: document.querySelector(".js-gallery"),
+  originalImg: document.querySelector(".lightbox__image"),
+  openModal: document.querySelector(".lightbox"),
+  closeModalBtn: document.querySelector('button[data-action="close-lightbox"]'),
+};
 
-jsGalleryRef.addEventListener("click", onImgClick);
-closeModalBtnRef.addEventListener("click", onCloseModalClick);
+refs.jsGallery.addEventListener("click", onImgClick);
+refs.closeModalBtn.addEventListener("click", onCloseModalClick);
 
 const createGalleryItem = ({ preview, original, description }) =>
   `<li class="gallery__item">
@@ -30,7 +30,7 @@ const galleryMarkup = gallery.reduce(
   ""
 );
 
-jsGalleryRef.insertAdjacentHTML("afterbegin", galleryMarkup);
+refs.jsGallery.insertAdjacentHTML("afterbegin", galleryMarkup);
 
 function onImgClick(event) {
   event.preventDefault();
@@ -40,19 +40,20 @@ function onImgClick(event) {
   }
 
   const imageRef = event.target;
-  const largeImgUrl = imageRef.dataset.source;
-  /*  const largeImgAlt = */
+  const { alt, dataset } = imageRef;
 
-  originalImgRef.setAttribute("src", largeImgUrl);
-  /*   originalImgRef.setAttribute("alt", largeImgAlt); */
+  refs.originalImg.setAttribute("src", dataset.source);
+  refs.originalImg.setAttribute("alt", alt);
+
   onOpenModalClick();
 }
 
 function onOpenModalClick() {
-  openModalRef.classList.add("is-open");
+  refs.openModal.classList.add("is-open");
 }
 
 function onCloseModalClick() {
-  originalImgRef.setAttribute("src", "#");
-  openModalRef.classList.remove("is-open");
+  refs.originalImg.setAttribute("src", "#");
+  refs.originalImg.setAttribute("alt", "#");
+  refs.openModal.classList.remove("is-open");
 }
